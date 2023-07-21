@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Random Fucking Password</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+
+    #toast {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 2px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+    }
+
+    #toast.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    @keyframes fadein {
+      from {
+        bottom: 0;
+        opacity: 0;
+      }
+
+      to {
+        bottom: 30px;
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeout {
+      from {
+        bottom: 30px;
+        opacity: 1;
+      }
+
+      to {
+        bottom: 0;
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Random Fucking Password</h2>
+    <label for="length">Password Length:</label>
+    <input type="number" id="length" min="8" max="30" value="12"><br>
+
+    <label for="symbols">Include Symbols:</label>
+    <input type="checkbox" id="symbols" onchange="toggleGenerateButton()" checked><br>
+
+    <label for="numbers">Include Numbers:</label>
+    <input type="checkbox" id="numbers" onchange="toggleGenerateButton()" checked><br>
+
+    <label for="lowercase">Include Lowercase Letters:</label>
+    <input type="checkbox" id="lowercase" onchange="toggleGenerateButton()" checked><br>
+
+    <label for="uppercase">Include Uppercase Letters:</label>
+    <input type="checkbox" id="uppercase" onchange="toggleGenerateButton()" checked><br>
+
+    <button onclick="generatePassword()" id="generateBtn" disabled>Random Password</button>
+    <button onclick="copyToClipboard()" id="copyBtn" disabled>Copy</button><br>
+
+    <p id="password">...</p>
+  </div>
+
+  <div id="toast">Password copied to clipboard!</div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      toggleGenerateButton();
+    });
+
+    function toggleGenerateButton() {
+      const length = document.getElementById("length").value;
+      const includeSymbols = document.getElementById("symbols").checked;
+      const includeNumbers = document.getElementById("numbers").checked;
+      const includeLowercase = document.getElementById("lowercase").checked;
+      const includeUppercase = document.getElementById("uppercase").checked;
+
+      const generateBtn = document.getElementById("generateBtn");
+      generateBtn.disabled = !(length > 0 && (includeSymbols || includeNumbers || includeLowercase || includeUppercase));
+    }
+
+    function generatePassword() {
+      const length = document.getElementById("length").value;
+      const includeSymbols = document.getElementById("symbols").checked;
+      const includeNumbers = document.getElementById("numbers").checked;
+      const includeLowercase = document.getElementById("lowercase").checked;
+      const includeUppercase = document.getElementById("uppercase").checked;
+
+      const symbols = "!@#$%^&*()_-+=[]{}|:;<>,.?/";
+      const numbers = "0123456789";
+      const lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+      const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+      let charset = "";
+      if (includeSymbols) charset += symbols;
+      if (includeNumbers) charset += numbers;
+      if (includeLowercase) charset += lowercaseLetters;
+      if (includeUppercase) charset += uppercaseLetters;
+
+      let password = "";
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset.charAt(randomIndex);
+      }
+
+      const generateBtn = document.getElementById("generateBtn");
+      const copyBtn = document.getElementById("copyBtn");
+
+      document.getElementById("password").textContent = password;
+      generateBtn.disabled = !(length > 0 && (includeSymbols || includeNumbers || includeLowercase || includeUppercase));
+      copyBtn.disabled = !password;
+    }
+
+    function copyToClipboard() {
+      const passwordField = document.getElementById("password");
+      const tempInput = document.createElement("textarea");
+      tempInput.value = passwordField.textContent;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+
+      const toast = document.getElementById("toast");
+      toast.className = "show";
+      setTimeout(function () {
+        toast.className = toast.className.replace("show", "");
+      }, 3000);
+    }
+  </script>
+</body>
+
+</html>
