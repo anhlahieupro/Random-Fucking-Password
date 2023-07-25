@@ -260,8 +260,6 @@
 
     let toastVisible = false;
     function copyToClipboard() {
-      if (toastVisible) return;
-
       const passwordField = document.getElementById("password");
       const tempInput = document.createElement("textarea");
       tempInput.value = passwordField.textContent;
@@ -269,6 +267,8 @@
       tempInput.select();
       document.execCommand("copy");
       document.body.removeChild(tempInput);
+
+      if (toastVisible) return;
 
       const toast = document.getElementById("toast");
       const copyBtn = document.getElementById("copyBtn");
