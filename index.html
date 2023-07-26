@@ -5,111 +5,15 @@
   <meta charset="UTF-8">
   <title>Random Fucking Password</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="styles.css">
 
   <meta name="description"
     content="Generate strong and random passwords with this free online password generator. Choose your password length and select the types of characters to include. Enhance your password security and protect your accounts with unique and reliable passwords. Use this tool to ensure your passwords meet the highest standards of strength and complexity, making them resistant to unauthorized access and potential threats. Safeguard your valuable information by creating strong passwords that are virtually impossible to guess or crack.">
 
   <meta name="keywords"
     content="password security, online password tool, random password generator, strong password creation, secure password generator, password strength checker, password manager, password complexity, password safety, password best practices, password guidelines, password encryption, password protection, password strength meter, password policy, password characters, password strength algorithm, password randomization, password length, password uniqueness">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-    }
-
-    .row {
-      margin-bottom: 2.5px;
-    }
-
-    .bottom {
-      margin-top: 20px;
-    }
-
-    .bottom a {
-      margin: 0px;
-      padding: 0px;
-      font-size: 12px;
-      text-decoration: none;
-    }
-
-    .bottom p {
-      margin: 5px;
-      padding: 0px;
-      font-size: 12px;
-      text-decoration: none;
-    }
-
-    #password {
-      font-size: 28px;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-
-    select#length {
-      width: 35px;
-      padding-top: 2px;
-      padding-bottom: 2px;
-      padding-left: 6px;
-      padding-right: 10px;
-      box-sizing: border-box;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      text-align: center;
-      border: 1px solid #ccc;
-      border-radius: 2.5px;
-    }
-
-    input,
-    select {
-      outline: none;
-    }
-
-    #toast {
-      visibility: hidden;
-      min-width: 50px;
-      height: 20px;
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      border-radius: 5px;
-      padding: 8px;
-      position: fixed;
-      z-index: 1;
-      left: 50%;
-      bottom: 30px;
-      transform: translateX(-50%);
-      pointer-events: none;
-    }
-
-    #toast.show {
-      visibility: visible;
-      animation: fadein 0.5s, fadeout 0.5s 1.5s;
-    }
-
-    button {
-      flex: 1;
-      font-size: 16px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      outline: none;
-    }
-
-    button:disabled {
-      background-color: #f5f6fa;
-      cursor: not-allowed;
-    }
-  </style>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LPE34802EE"></script>
@@ -180,117 +84,7 @@
     <p style="font-style: italic;">We do not store any passwords.</p>
   </center>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      toggleGenerateButton();
-    });
-
-    function toggleGenerateButton() {
-      const length = document.getElementById("length").value;
-      const includeSymbols = document.getElementById("symbols").checked;
-      const includeNumbers = document.getElementById("numbers").checked;
-      const includeLowercase = document.getElementById("lowercase").checked;
-      const includeUppercase = document.getElementById("uppercase").checked;
-
-      const generateBtn = document.getElementById("generateBtn");
-      generateBtn.disabled = !(length > 0 && (includeSymbols || includeNumbers || includeLowercase || includeUppercase));
-    }
-
-    function generatePassword() {
-      const length = document.getElementById("length").value;
-      const includeSymbols = document.getElementById("symbols").checked;
-      const includeNumbers = document.getElementById("numbers").checked;
-      const includeLowercase = document.getElementById("lowercase").checked;
-      const includeUppercase = document.getElementById("uppercase").checked;
-
-      const symbols = "!@#$%^&*()_-+=[]{}|:;<>,.?/";
-      const numbers = "0123456789";
-      const lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
-      const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-      let charset = "";
-      if (includeSymbols) charset += symbols;
-      if (includeNumbers) charset += numbers;
-      if (includeLowercase) charset += lowercaseLetters;
-      if (includeUppercase) charset += uppercaseLetters;
-
-      let password = "";
-
-      for (let i = 0; i < 4; i++) {
-        const charType =
-          i === 0
-            ? includeSymbols
-            : i === 1
-              ? includeNumbers
-              : i === 2
-                ? includeLowercase
-                : includeUppercase;
-
-        if (charType) {
-          const randomIndex = Math.floor(Math.random() * charset.length);
-          password += charset.charAt(randomIndex);
-        }
-      }
-
-      for (let i = password.length; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * charset.length);
-        password += charset.charAt(randomIndex);
-      }
-
-      password = shuffleString(password);
-
-      const generateBtn = document.getElementById("generateBtn");
-      const copyBtn = document.getElementById("copyBtn");
-
-      document.getElementById("password").textContent = password;
-      generateBtn.disabled = !(length > 0 && (includeSymbols || includeNumbers || includeLowercase || includeUppercase));
-      copyBtn.disabled = !password;
-    }
-
-    function shuffleString(str) {
-      const chars = str.split('');
-
-      for (let i = chars.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [chars[i], chars[j]] = [chars[j], chars[i]];
-      }
-
-      return chars.join('');
-    }
-
-    let toastVisible = false;
-    function copyToClipboard() {
-      const passwordField = document.getElementById("password");
-      const tempInput = document.createElement("textarea");
-      tempInput.value = passwordField.textContent;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
-
-      if (toastVisible) return;
-
-      const toast = document.getElementById("toast");
-      const copyBtn = document.getElementById("copyBtn");
-
-      const toastRect = toast.getBoundingClientRect();
-      const rect = copyBtn.getBoundingClientRect();
-
-      const toastX = rect.right + toastRect.width / 2 + 5;
-      const toastY = rect.top - toastRect.height / 2 - 5;
-
-      toast.style.left = toastX + "px";
-      toast.style.top = toastY + "px";
-      toast.classList.add("show");
-
-      setTimeout(function () {
-        toast.classList.remove("show");
-        toastVisible = false;
-      }, 2000);
-
-      toastVisible = true;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 
 </html>

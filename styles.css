@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.row {
+    margin-bottom: 2.5px;
+}
+
+.bottom {
+    margin-top: 20px;
+}
+
+.bottom a {
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.bottom p {
+    margin: 5px;
+    padding: 0px;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+#password {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+select#length {
+    width: 35px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 2.5px;
+}
+
+input,
+select {
+    outline: none;
+}
+
+#toast {
+    visibility: hidden;
+    min-width: 50px;
+    height: 20px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+#toast.show {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 1.5s;
+}
+
+button {
+    flex: 1;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+button:disabled {
+    background-color: #f5f6fa;
+    cursor: not-allowed;
+}
