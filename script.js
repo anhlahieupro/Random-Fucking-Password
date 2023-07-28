@@ -25,28 +25,35 @@ function generatePassword() {
     const lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
     const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    let charset = "";
-    if (includeSymbols) charset += symbols;
-    if (includeNumbers) charset += numbers;
-    if (includeLowercase) charset += lowercaseLetters;
-    if (includeUppercase) charset += uppercaseLetters;
-
     let password = "";
+    let charset = "";
 
-    for (let i = 0; i < 4; i++) {
-        const charType =
-            i === 0
-                ? includeSymbols
-                : i === 1
-                    ? includeNumbers
-                    : i === 2
-                        ? includeLowercase
-                        : includeUppercase;
+    if (includeLowercase) {
+        charset += lowercaseLetters;
 
-        if (charType) {
-            const randomIndex = Math.floor(Math.random() * charset.length);
-            password += charset.charAt(randomIndex);
-        }
+        const randomIndex = Math.floor(Math.random() * lowercaseLetters.length);
+        password += lowercaseLetters.charAt(randomIndex);
+    }
+
+    if (includeUppercase) {
+        charset += uppercaseLetters;
+
+        const randomIndex = Math.floor(Math.random() * uppercaseLetters.length);
+        password += uppercaseLetters.charAt(randomIndex);
+    }
+
+    if (includeSymbols) {
+        charset += symbols;
+
+        const randomIndex = Math.floor(Math.random() * symbols.length);
+        password += symbols.charAt(randomIndex);
+    }
+
+    if (includeNumbers) {
+        charset += numbers;
+
+        const randomIndex = Math.floor(Math.random() * numbers.length);
+        password += numbers.charAt(randomIndex);
     }
 
     for (let i = password.length; i < length; i++) {
